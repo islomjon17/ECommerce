@@ -36,6 +36,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+#Customer orders
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     pustomer = models.ForeignKey(Customer, on_delete=models.CASCADE)
