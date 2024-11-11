@@ -8,7 +8,8 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
-    
+    class Meta:
+        verbose_name_plural = "categories list"
 
 
 class Customer(models.Model):
@@ -20,6 +21,10 @@ class Customer(models.Model):
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    class Meta:
+        verbose_name_plural = "Customers list"
+
+    
     
 
 class Product(models.Model):
@@ -29,10 +34,12 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE , default=1, related_name='products')
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
-    image = models.ImageField(upload_to="uloades/products/")
-
+    image = models.ImageField(upload_to="uploads/product/")
+    is_sale = models.BooleanField(default=False)
+    sale_price =  models.DecimalField(default=0, decimal_places=2, max_digits=6)
     class Meta:
         ordering = ['-created']
+        verbose_name_plural = "Products list"
 
     def __str__(self):
         return self.name
@@ -48,3 +55,6 @@ class Order(models.Model):
     status = models.BooleanField(default=False)
     def __str__(self):
         return self.product
+    
+    class Meta:
+        verbose_name_plural = "Orders list"
