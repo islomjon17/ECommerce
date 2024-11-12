@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Shop in style</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        Register
+      </p>
+    </div>
+  </div>
+</header>
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+=
+      <div class="col-md-6 offset-md-3">
+        <form method="POST" action="{% url 'register' %}">
+          {% csrf_token %}
+          <!-- <div class="form-group">
+                     
+                      <input type="text" name="username" class="form-control"  aria-describedby="emailHelp" placeholder="Enter username">
+                      
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      
+                      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Your password">
+                    </div>
+                    <br> -->
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+  
+  </div>
+</div>
+{% endblock %}
