@@ -34,7 +34,7 @@ def home(request):
 
 def product(request,pk):
     product = Product.objects.get(id=pk)
-    return render(request, 'items/product.html', {"product":product})
+    return render(request, 'items/product.html', {'product':product})
 
 def about(request):
    

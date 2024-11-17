@@ -15,37 +15,29 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <center>
-                                    <h5 class="card-title">{{ product.name
-                                        }}</h5>
-                                    <p class="card-text">{{ product.description
-                                        }}</p>
+                                    <h5 class="card-title">{{product.name}}</h5>
+                                    <p class="card-text">{{ product.description}}</p>
 
                                     <!-- Category -->
-                                    <p class="card-text">Category: {{
-                                        product.category.name }}</p>
+                                    <p class="card-text">Category: {{product.category.name}}</p>
 
                                     <!-- Price and Sale Price -->
                                     {% if product.is_sale %}
-                                    <p class="card-text">Sale Price: ${{
-                                        product.sale_price }}</p>
+                                    <p class="card-text">Sale Price: ${{product.sale_price}}</p>
                                     <p
                                         class="card-text text-muted"><del>Original
-                                            Price: ${{ product.price
-                                            }}</del></p>
+                                            Price: ${{product.price}}</del></p>
                                     {% else %}
-                                    <p class="card-text">Price: ${{
-                                        product.price }}</p>
+                                    <p class="card-text">Price: ${{product.price}}</p>
                                     {% endif %}
 
                                     <!-- Created Date -->
                                     <p class="card-text"><small
-                                            class="text-muted">Created on: {{
-                                            product.created }}</small></p>
+                                            class="text-muted">Created on: {{product.created}}</small></p>
 
                                     <!-- Updated Date -->
                                     <p class="card-text"><small
-                                            class="text-muted">Last updated: {{
-                                            product.updated }}</small></p>
+                                            class="text-muted">Last updated: {{product.updated}}</small></p>
                                     <a href="{% url 'home' %}"
                                         class="btn btn-secondary">Back to home
                                         page</a>
@@ -81,7 +73,8 @@ $(document).on('click', "#add-cart", function(e) {
             action: 'post'
         },
         success: function (json) {
-            console.log(json); // Log the response for debugging
+            //console.log(json); // Log the response for debugging
+            document.querySelector('#cart_quantity').textContent = json.qty
         },
         error: function (xhr, errMsg, err) {
             console.error('Error:', errMsg, err); // Log the error for debugging

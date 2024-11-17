@@ -26,10 +26,6 @@ def cart_summary(request):
 #         return response
         
 
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from .cart import Cart  # Assuming you have a custom Cart class
-
 def cart_add(request):
     cart = Cart(request)
     if request.method == 'POST' and request.POST.get('action') == 'post':
@@ -41,7 +37,16 @@ def cart_add(request):
         product = get_object_or_404(Product, id=product_id)
 
         cart.add(product=product)
+        
+        
+        # Get quantity
+        
+        cart_quantity = cart.__len__()
+        
+        
+        # Returun response
         return JsonResponse({
+            'qty': cart_quantity,
             'success': True,
             'product_name': product.name,
             'message': f'{product.name} has been added to the cart.',
