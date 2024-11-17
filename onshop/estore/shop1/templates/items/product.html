@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<br><br><br><br>
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="{{ product.image.url }}" class="card-img"
+                                alt="{{ product.name }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <center>
+                                    <h5 class="card-title">{{ product.name
+                                        }}</h5>
+                                    <p class="card-text">{{ product.description
+                                        }}</p>
+
+                                    <!-- Category -->
+                                    <p class="card-text">Category: {{
+                                        product.category.name }}</p>
+
+                                    <!-- Price and Sale Price -->
+                                    {% if product.is_sale %}
+                                    <p class="card-text">Sale Price: ${{
+                                        product.sale_price }}</p>
+                                    <p
+                                        class="card-text text-muted"><del>Original
+                                            Price: ${{ product.price
+                                            }}</del></p>
+                                    {% else %}
+                                    <p class="card-text">Price: ${{
+                                        product.price }}</p>
+                                    {% endif %}
+
+                                    <!-- Created Date -->
+                                    <p class="card-text"><small
+                                            class="text-muted">Created on: {{
+                                            product.created }}</small></p>
+
+                                    <!-- Updated Date -->
+                                    <p class="card-text"><small
+                                            class="text-muted">Last updated: {{
+                                            product.updated }}</small></p>
+                                    <a href="{% url 'home' %}"
+                                        class="btn btn-secondary">Back to home
+                                        page</a>
+                                    <br><br><br><br>
+                                    <button type="button"
+                                        class="btn btn-secondary"
+                                        value="{{ product.id }}"
+                                        id="add-cart">Add to cart</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </center>
+    </div>
+</div>
+
+<script>
+$(document).on('click', "#add-cart", function(e) {
+
+    e.preventDefault()
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'cart_add' %}",
+        data: {
+            product_id: $('#add-cart').val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function (json) {
+            console.log(json); // Log the response for debugging
+        },
+        error: function (xhr, errMsg, err) {
+            console.error('Error:', errMsg, err); // Log the error for debugging
+        }
+    });
+})
+
+    
+</script>
+
+{% endblock %}

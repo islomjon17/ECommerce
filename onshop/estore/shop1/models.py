@@ -1,13 +1,21 @@
 from django.db import models
-
-# Create your models here.
 import datetime
+# Create your models here.
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
     
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        # Capitalize the first letter of the name before saving
+        if self.name:
+            self.name = self.name.capitalize()
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name_plural = "categories list"
 

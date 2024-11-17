@@ -5,17 +5,36 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Product
+from .models import Product, Category
 from .forms import SignUpForm
 # Create your views here.
 
 
+def category(request, foo):
+    foo = foo.replace("-", " ").capitalize()
+    try:
+        category_obj = Category.objects.get(name=foo)  # Fetch specific category
+        product = Product.objects.filter(category=category_obj)
+        categories = Category.objects.all()  # Fetch all categories for the navbar
+        return render(request, 'items/category.html', {
+            'category': category_obj, 
+            'product': product, 
+            'categories': categories  # Pass all categories
+        })
+    except Category.DoesNotExist:
+        messages.error(request, "Error in category name...")
+        return redirect("home")
+
+
 def home(request):
     products = Product.objects.all()
-    return render(request, 'home.html', {'products':products})
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'products':products, 'categories':categories})
 
 
-
+def product(request,pk):
+    product = Product.objects.get(id=pk)
+    return render(request, 'items/product.html', {"product":product})
 
 def about(request):
    
